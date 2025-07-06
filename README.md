@@ -62,7 +62,7 @@
 
 #### 2.1 数据结构与字段说明
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps1.jpg) 
+![img](file:///example\wps1.jpg) 
 
 ***\*users\****:存储用户信息
 
@@ -76,7 +76,7 @@
 | Address  | 地址     | VARCHAR  | 255  |            |
 | password | 密码     | VARCHAR  | 255  |            |
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps2.jpg) 
+![img](file:///example\wps2.jpg) 
 
 ***\*categories\*******\*:\****存储文章分类
 
@@ -87,7 +87,7 @@
 | id   | 分类ID   | INT      | 11   | 主码       |
 | name | 分类名称 | VARCHAR  | 50   |            |
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps3.jpg) 
+![img](file:///example\wps3.jpg) 
 
 ***\*articles:\****存储文章信息
 
@@ -104,11 +104,11 @@
 | date        | 发布日期   | DATE     |      |            |
 | Category_id | 分类ID     | INT      | 11   | 外码       |
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps4.jpg) 
+![img](file:///example\wps4.jpg) 
 
 #### 2.2 E-R图
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps5.png)
+![img](file:///example\wps5.png)
 
  
 
@@ -138,55 +138,55 @@
 
 #### 3.2 流程图
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps6.png)
+![img](file:///example\wps6.png)
 
 ## 第**4章** 实现的效果抓图
 
 #### 4.1 index.html
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps7.jpg) 
+![img](file:///example\wps7.jpg) 
 
 搜索功能：
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps8.jpg) 
+![img](file:///examplewps8.jpg) 
 
 分类词条筛选功能：
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps9.jpg) 
+![img](file:///example\wps9.jpg) 
 
 登录后右上角显示用户名及“欢迎”:
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps10.jpg) 
+![img](file:///example\wps10.jpg) 
 
 #### 4.2 login.html
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps11.jpg) 
+![img](file:///example\wps11.jpg) 
 
 登录成功提示：
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps12.jpg) 
+![img](file:///example\wps12.jpg) 
 
 #### 4.3 register.html
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps13.jpg) 
+![img](file:///example\wps13.jpg) 
 
 #### 4.4 content.html
 
 登录后直接跳转此页面：
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps14.jpg) 
+![img](file:///examplewps14.jpg) 
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps15.jpg) 
+![img](file:///example\wps15.jpg) 
 
 这里有一个修改的功能：
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps16.jpg) 
+![img](file:///example\wps16.jpg) 
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps17.jpg) 
+![img](file:///example\wps17.jpg) 
 
 #### 4.5 articles.html
 
-![img](file:///C:\Users\XZS\AppData\Local\Temp\ksohtml34008\wps18.jpg) 
+![img](file:///example\wps18.jpg) 
 
 ## 第**5章** 设计小结
 
