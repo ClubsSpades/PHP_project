@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容管理 - 心理健康科普平台</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0,123,255,0.25);
+        }
+        .btn-primary {
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: 500;
+        }
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .table tr {
+            transition: background 0.2s;
+        }
+        .table tr:hover {
+            background: #f1f3f5;
+        }
+        .required::after {
+            content: '*';
+            color: #dc3545;
+            margin-left: 4px;
+        }
+        @media (max-width: 768px) {
+            .table-responsive-sm {
+                overflow-x: auto;
+            }
+            .form-group {
+                margin-bottom: 1rem;
+            }
+        }
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">心理健康科普平台</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="切换导航">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <span class="nav-link" id="userInfo"></span>
+                <a class="nav-link" href="ai_apps.html" id="aiAppsLink" style="display:none;">内容管理</a>
+                <a class="nav-link" href="/php/php_project/backend/logout.php" id="logoutLink" style="display:none;">注销</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container my-5">
+    <h1 class="mb-4 text-primary fw-bold">心理健康内容管理</h1>
+    <div class="card p-4 mb-5">
+        <h3 class="mb-4 text-secondary">添加新词条</h3>
+        <form id="addForm" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-12 col-md-6 form-group">
+                    <label for="addTitle" class="form-label required">标题</label>
+                    <input type="text" class="form-control" id="addTitle" required aria-describedby="addTitleHelp">
+                    <div id="addTitleHelp" class="form-text">请输入词条标题</div>
+                </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="addThumbnail" class="form-label">缩略图</label>
+                    <input type="file" class="form-control" id="addThumbnail" accept="image/*" aria-describedby="addThumbnailHelp">
+                    <div id="addThumbnailHelp" class="form-text">上传图片，建议尺寸 200x200</div>
+                    <img id="thumbnailPreview" src="" alt="缩略图预览" class="img-fluid mt-2 d-none" style="max-height: 100px;">
+                </div>
+                <div class="col-12 form-group">
+                    <label for="addSummary" class="form-label required">简介</label>
+                    <textarea class="form-control" id="addSummary" rows="4" required aria-describedby="addSummaryHelp"></textarea>
+                    <div id="addSummaryHelp" class="form-text">简要描述词条内容</div>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="addContent" class="form-label required">详细内容</label>
+                    <textarea class="form-control" id="addContent" rows="6" required aria-describedby="addContentHelp"></textarea>
+                    <div id="addContentHelp" class="form-text">请输入详细内容</div>
+                </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="addSource" class="form-label required">来源</label>
+                    <input type="text" class="form-control" id="addSource" required aria-describedby="addSourceHelp">
+                    <div id="addSourceHelp" class="form-text">请输入信息来源</div>
+                </div>
+                <div class="col-12 col-md-6 form-group">
+                    <label for="addDate" class="form-label required">日期</label>
+                    <input type="date" class="form-control" id="addDate" required aria-describedby="addDateHelp">
+                    <div id="addDateHelp" class="form-text">选择发布日期</div>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="addCategory" class="form-label required">分类</label>
+                    <select class="form-select" id="addCategory" required aria-describedby="addCategoryHelp">
+                        <option value="">加载中...</option>
+                    </select>
+                    <div id="addCategoryHelp" class="form-text">选择词条分类</div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="addSubmitBtn">
+                        <i class="bi bi-plus-circle me-2"></i>添加
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card p-4">
+        <h3 class="mb-4 text-secondary">现有词条</h3>
+        <div class="table-responsive-sm">
+            <table class="table table-hover">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">标题</th>
+                    <th scope="col">分类</th>
+                    <th scope="col">来源</th>
+                    <th scope="col">日期</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody id="articleTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="toast-container"></div>
+<script>
+    // 转义 HTML 特殊字符
+    function escapeHTML(str) {
+        if (!str) return '';
+        return str
+            .replace(/&/g, '&')
+            .replace(/"/g, '"')
+            .replace(/'/g, '"')
+            .replace(/</g, '<')
+            .replace(/>/g, '>');
+    }
+
+    // 显示 Toast 通知
+    function showToast(message, type = 'success') {
+        const toastContainer = document.querySelector('.toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-white bg-${type} border-0`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+        toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${escapeHTML(message)}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="关闭"></button>
+                </div>`;
+        toastContainer.appendChild(toast);
+        const toastInstance = new bootstrap.Toast(toast);
+        toastInstance.show();
+        toast.addEventListener('hidden.bs.toast', () => toast.remove());
+    }
+
+    // 检查登录状态
+    fetch('/php/php_project/backend/check_session.php', { credentials: 'include' })
+        .then(response => {
+            if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Session data:', data);
+            const userInfo = document.getElementById('userInfo');
+            if (data.username) {
+                userInfo.textContent = `欢迎, ${escapeHTML(data.username)}`;
+                document.getElementById('aiAppsLink').style.display = 'inline';
+                document.getElementById('logoutLink').style.display = 'inline';
+                loadCategories(document.getElementById('addCategory'));
+                loadArticles();
+            } else {
+                showToast('请先登录', 'danger');
+                window.location.href = 'login.html';
+            }
+        })
+        .catch(error => {
+            console.error('Check session error:', error);
+            showToast('会话检查失败，请重新登录', 'danger');
+            window.location.href = 'login.html';
+        });
+
+    // 获取分类
+    function loadCategories(selectElement) {
+        fetch('/php/php_project/backend/categories.php', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+                return response.json();
+            })
+            .then(categories => {
+                selectElement.innerHTML = '<option value="">选择分类</option>';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = escapeHTML(category.name);
+                    selectElement.appendChild(option);
+                });
+                if (!categories.length) {
+                    selectElement.innerHTML = '<option value="">无分类可用</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Fetch categories error:', error);
+                selectElement.innerHTML = '<option value="">加载分类失败</option>';
+                showToast('加载分类失败', 'danger');
+            });
+    }
+
+    // 加载词条列表
+    function loadArticles() {
+        fetch('/php/php_project/backend/articles.php', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+                return response.json();
+            })
+            .then(articles => {
+                const tableBody = document.getElementById('articleTable');
+                tableBody.innerHTML = '';
+                articles.forEach(article => {
+                    const row = `
+                            <tr>
+                                <td>${escapeHTML(article.title)}</td>
+                                <td>${escapeHTML(article.category_name)}</td>
+                                <td>${escapeHTML(article.source)}</td>
+                                <td>${escapeHTML(article.date)}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="editArticle(${article.id})" aria-label="修改词条 ${escapeHTML(article.title)}">
+                                        <i class="bi bi-pencil-square"></i> 修改
+                                    </button>
+                                </td>
+                            </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error('Load articles error:', error);
+                showToast('加载词条失败', 'danger');
+            });
+    }
+
+    // 缩略图预览
+    document.getElementById('addThumbnail').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('thumbnailPreview');
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                preview.src = reader.result;
+                preview.classList.remove('d-none');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            preview.classList.add('d-none');
+        }
+    });
+
+    // 添加词条
+    const addForm = document.getElementById('addForm');
+    const addSubmitBtn = document.getElementById('addSubmitBtn');
+    addForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        addSubmitBtn.disabled = true;
+        addSubmitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>保存中...';
+        const formData = new FormData();
+        formData.append('title', document.getElementById('addTitle').value);
+        formData.append('thumbnail', document.getElementById('addThumbnail').files[0] || '');
+        formData.append('summary', document.getElementById('addSummary').value);
+        formData.append('content', document.getElementById('addContent').value);
+        formData.append('source', document.getElementById('addSource').value);
+        formData.append('date', document.getElementById('addDate').value);
+        formData.append('category_id', document.getElementById('addCategory').value);
+
+        fetch('/php/php_project/backend/add_article.php', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        })
+            .then(response => response.json())
+            .then(data => {
+                showToast(data.message, data.success ? 'success' : 'danger');
+                if (data.success) {
+                    addForm.reset();
+                    document.getElementById('thumbnailPreview').classList.add('d-none');
+                    loadArticles();
+                    loadCategories(document.getElementById('addCategory'));
+                }
+            })
+            .catch(error => {
+                console.error('Add error:', error);
+                showToast('添加词条失败', 'danger');
+            })
+            .finally(() => {
+                addSubmitBtn.disabled = false;
+                addSubmitBtn.innerHTML = '<i class="bi bi-plus-circle me-2"></i>添加';
+            });
+    });
+
+    // 修改词条
+    function editArticle(id) {
+        fetch(`/php/php_project/backend/articles.php?id=${id}`, { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.status}`);
+                return response.json();
+            })
+            .then(article => {
+                if (article.error) {
+                    showToast(article.error, 'danger');
+                    return;
+                }
+                const modal = document.createElement('div');
+                modal.className = 'modal fade';
+                modal.id = 'editModal';
+                modal.setAttribute('tabindex', '-1');
+                modal.setAttribute('aria-labelledby', 'editModalLabel');
+                modal.setAttribute('aria-hidden', 'true');
+                modal.innerHTML = `
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">修改词条</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editForm" enctype="multipart/form-data">
+                                        <input type="hidden" id="editId" value="${article.id}">
+                                        <input type="hidden" id="existingThumbnail" value="${escapeHTML(article.thumbnail || '')}">
+                                        <div class="row g-3">
+                                            <div class="col-12 col-md-6 form-group">
+                                                <label for="editTitle" class="form-label required">标题</label>
+                                                <input type="text" class="form-control" id="editTitle" value="${escapeHTML(article.title || '')}" required>
+                                            </div>
+                                            <div class="col-12 col-md-6 form-group">
+                                                <label for="editThumbnail" class="form-label">缩略图</label>
+                                                <input type="file" class="form-control" id="editThumbnail" accept="image/*">
+                                                <img src="${escapeHTML(article.thumbnail || '/php/php_project/picture/default.jpg')}" id="editThumbnailPreview" alt="当前缩略图" class="img-fluid mt-2" style="max-height: 100px;">
+                                            </div>
+                                            <div class="col-12 form-group">
+                                                <label for="editSummary" class="form-label required">简介</label>
+                                                <textarea class="form-control" id="editSummary" rows="4" required>${escapeHTML(article.summary || '')}</textarea>
+                                            </div>
+                                            <div class="col-12 form-group">
+                                                <label for="editContent" class="form-label required">详细内容</label>
+                                                <textarea class="form-control" id="editContent" rows="6" required>${escapeHTML(article.content || '')}</textarea>
+                                            </div>
+                                            <div class="col-12 col-md-6 form-group">
+                                                <label for="editSource" class="form-label required">来源</label>
+                                                <input type="text" class="form-control" id="editSource" value="${escapeHTML(article.source || '')}" required>
+                                            </div>
+                                            <div class="col-12 col-md-6 form-group">
+                                                <label for="editDate" class="form-label required">日期</label>
+                                                <input type="date" class="form-control" id="editDate" value="${article.date || ''}" required>
+                                            </div>
+                                            <div class="col-12 form-group">
+                                                <label for="editCategory" class="form-label required">分类</label>
+                                                <select class="form-select" id="editCategory" required>
+                                                    <option value="">加载中...</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary" id="editSubmitBtn">
+                                                    <i class="bi bi-save me-2"></i>保存
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>`;
+                document.body.appendChild(modal);
+                const modalInstance = new bootstrap.Modal(modal);
+                modalInstance.show();
+
+                // 缩略图预览
+                document.getElementById('editThumbnail').addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    const preview = document.getElementById('editThumbnailPreview');
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            preview.src = reader.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // 加载分类
+                loadCategories(document.getElementById('editCategory'));
+                setTimeout(() => {
+                    const editCategory = document.getElementById('editCategory');
+                    if (editCategory && article.category_id) {
+                        editCategory.value = article.category_id;
+                    }
+                }, 100);
+
+                // 提交修改
+                const editForm = document.getElementById('editForm');
+                const editSubmitBtn = document.getElementById('editSubmitBtn');
+                editForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    editSubmitBtn.disabled = true;
+                    editSubmitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>保存中...';
+                    const formData = new FormData();
+                    formData.append('id', document.getElementById('editId').value);
+                    formData.append('title', document.getElementById('editTitle').value);
+                    formData.append('thumbnail', document.getElementById('editThumbnail').files[0] || '');
+                    formData.append('existing_thumbnail', document.getElementById('existingThumbnail').value);
+                    formData.append('summary', document.getElementById('editSummary').value);
+                    formData.append('content', document.getElementById('editContent').value);
+                    formData.append('source', document.getElementById('editSource').value);
+                    formData.append('date', document.getElementById('editDate').value);
+                    formData.append('category_id', document.getElementById('editCategory').value);
+
+                    fetch('/php/php_project/backend/update_article.php', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            showToast(data.message, data.success ? 'success' : 'danger');
+                            if (data.success) {
+                                modalInstance.hide();
+                                loadArticles();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Update error:', error);
+                            showToast('修改词条失败', 'danger');
+                        })
+                        .finally(() => {
+                            editSubmitBtn.disabled = false;
+                            editSubmitBtn.innerHTML = '<i class="bi bi-save me-2"></i>保存';
+                        });
+                });
+
+                // 清理模态框
+                modal.addEventListener('hidden.bs.modal', () => {
+                    modal.remove();
+                });
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                showToast('加载词条失败', 'danger');
+            });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 加载中文字体（可选，提升中文排版）
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap';
+    document.head.appendChild(link);
+</script>
+</body>
+</html>
