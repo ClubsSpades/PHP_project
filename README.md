@@ -62,7 +62,7 @@
 
 #### 2.1 数据结构与字段说明
 
-![img](file:///example\wps1.jpg) 
+![img](example/wps1.jpg) 
 
 ***\*users\****:存储用户信息
 
@@ -76,7 +76,7 @@
 | Address  | 地址     | VARCHAR  | 255  |            |
 | password | 密码     | VARCHAR  | 255  |            |
 
-![img](file:///example\wps2.jpg) 
+![img](example/wps2.jpg) 
 
 ***\*categories\*******\*:\****存储文章分类
 
@@ -87,7 +87,7 @@
 | id   | 分类ID   | INT      | 11   | 主码       |
 | name | 分类名称 | VARCHAR  | 50   |            |
 
-![img](file:///example\wps3.jpg) 
+![img](example/wps3.jpg) 
 
 ***\*articles:\****存储文章信息
 
@@ -104,11 +104,11 @@
 | date        | 发布日期   | DATE     |      |            |
 | Category_id | 分类ID     | INT      | 11   | 外码       |
 
-![img](file:///example\wps4.jpg) 
+![img](example/wps4.jpg) 
 
 #### 2.2 E-R图
 
-![img](file:///example\wps5.png)
+![img](example/wps5.png)
 
  
 
@@ -138,13 +138,13 @@
 
 #### 3.2 流程图
 
-![img](file:///example\wps6.png)
+![img](example/wps6.png)
 
 ## 第**4章** 实现的效果抓图
 
 #### 4.1 index.html
 
-![img](file:///example\wps7.jpg) 
+![img](example/wps7.jpg) 
 
 搜索功能：
 
@@ -152,23 +152,23 @@
 
 分类词条筛选功能：
 
-![img](file:///example\wps9.jpg) 
+![img](example/wps9.jpg) 
 
 登录后右上角显示用户名及“欢迎”:
 
-![img](file:///example\wps10.jpg) 
+![img](example/wps10.jpg) 
 
 #### 4.2 login.html
 
-![img](file:///example\wps11.jpg) 
+![img](example/wps11.jpg) 
 
 登录成功提示：
 
-![img](file:///example\wps12.jpg) 
+![img](example/wps12.jpg) 
 
 #### 4.3 register.html
 
-![img](file:///example\wps13.jpg) 
+![img](example/wps13.jpg) 
 
 #### 4.4 content.html
 
@@ -176,17 +176,17 @@
 
 ![img](file:///examplewps14.jpg) 
 
-![img](file:///example\wps15.jpg) 
+![img](example/wps15.jpg) 
 
 这里有一个修改的功能：
 
-![img](file:///example\wps16.jpg) 
+![img](example/wps16.jpg) 
 
-![img](file:///example\wps17.jpg) 
+![img](example/wps17.jpg) 
 
 #### 4.5 articles.html
 
-![img](file:///example\wps18.jpg) 
+![img](example/wps18.jpg) 
 
 ## 第**5章** 设计小结
 
